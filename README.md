@@ -11,10 +11,14 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-The Dynamic Carousel Indicator is a Flutter widget package that provides an interactive indicator for dynamic carousels. It offers customization options for dot size, spacing, color, and animation, enhancing the user experience when navigating through a carousel of items.
-
+The Dynamic Carousel Indicator provides an interactive indicator for dynamic carousels.
 
 ![example gif](carousel_dots.gif)
+
+
+## Author
+
+Chanapongpan Najaikong (Pick) pick.chanapongpan@gmail.com
 
 ## Features
 
