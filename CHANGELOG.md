@@ -1,6 +1,6 @@
 ## 1.0.3
 
-- fix private api
+- fix private types
 
 ## 1.0.2
 
