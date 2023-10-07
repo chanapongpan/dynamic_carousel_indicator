@@ -1,3 +1,11 @@
+## 1.0.3
+
+- fix private api
+
+## 1.0.2
+
+- update sdk version
+
 ## 1.0.1
 
 - add example

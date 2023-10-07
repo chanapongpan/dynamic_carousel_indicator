@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-enum ScrollDirection { initial, left, right }
+enum _ScrollDirection { initial, left, right }
 
-enum ScrollRangeDirection { initial, left, right }
+enum _ScrollRangeDirection { initial, left, right }
 
 class DynamicCarouselIndicator extends StatefulWidget {
   /// The current index of the page in the dynamic carousel.
@@ -74,8 +74,9 @@ class _DynamicCarouselIndicatorState extends State<DynamicCarouselIndicator>
   late final PageController pageController;
   late final AnimationController animationController;
   late Animation<double> animation;
-  late ScrollRangeDirection scrollRangeDirection = ScrollRangeDirection.initial;
-  late ScrollDirection scrollDirection = ScrollDirection.initial;
+  late _ScrollRangeDirection scrollRangeDirection =
+      _ScrollRangeDirection.initial;
+  late _ScrollDirection scrollDirection = _ScrollDirection.initial;
   final Duration animateDuration = const Duration(milliseconds: 100);
 
   int currentPage = 0;
@@ -98,13 +99,13 @@ class _DynamicCarouselIndicatorState extends State<DynamicCarouselIndicator>
   }
 
   void onPageChaned(int value) {
-    scrollRangeDirection = ScrollRangeDirection.initial;
-    scrollDirection = ScrollDirection.initial;
+    scrollRangeDirection = _ScrollRangeDirection.initial;
+    scrollDirection = _ScrollDirection.initial;
 
     if (value > currentPage) {
-      scrollDirection = ScrollDirection.right;
+      scrollDirection = _ScrollDirection.right;
     } else if ((value < currentPage)) {
-      scrollDirection = ScrollDirection.left;
+      scrollDirection = _ScrollDirection.left;
     }
 
     double begin = 0;
@@ -136,10 +137,10 @@ class _DynamicCarouselIndicatorState extends State<DynamicCarouselIndicator>
     }
 
     if (dotRangeIndex == previousDotRangeIndex && currentPage > previousePage) {
-      scrollRangeDirection = ScrollRangeDirection.right;
+      scrollRangeDirection = _ScrollRangeDirection.right;
     } else if (dotRangeIndex == previousDotRangeIndex &&
         currentPage < previousePage) {
-      scrollRangeDirection = ScrollRangeDirection.left;
+      scrollRangeDirection = _ScrollRangeDirection.left;
     }
   }
 
@@ -154,7 +155,7 @@ class _DynamicCarouselIndicatorState extends State<DynamicCarouselIndicator>
     if (widget.count <= 1) {
       return const SizedBox.shrink();
     }
-    return CarouselIndicator(
+    return _CarouselIndicator(
       count: widget.count,
       currentPage: currentPage,
       previousePage: previousePage,
@@ -178,14 +179,14 @@ class _DynamicCarouselIndicatorState extends State<DynamicCarouselIndicator>
   }
 }
 
-class CarouselIndicator extends StatelessWidget {
+class _CarouselIndicator extends StatelessWidget {
   final int count;
   final int currentPage;
   final int previousePage;
   final int dotRangeIndex;
 
-  final ScrollRangeDirection scrollRangeDirection;
-  final ScrollDirection scrollDirection;
+  final _ScrollRangeDirection scrollRangeDirection;
+  final _ScrollDirection scrollDirection;
   final Animation<double> animation;
   final ScrollingDotsEffect effect;
 
@@ -193,8 +194,7 @@ class CarouselIndicator extends StatelessWidget {
   static int visibleDots = 3;
   static int maxVisibleDots = 7;
 
-  const CarouselIndicator({
-    super.key,
+  const _CarouselIndicator({
     required this.count,
     required this.currentPage,
     required this.previousePage,
@@ -219,7 +219,7 @@ class CarouselIndicator extends StatelessWidget {
         animation: animation,
         builder: (context, child) {
           return CustomPaint(
-            painter: ScrollingDotsPainter(
+            painter: _ScrollingDotsPainter(
               currentPage: currentPage,
               previousePage: previousePage,
               dotRangeIndex: dotRangeIndex,
@@ -273,17 +273,17 @@ class ScrollingDotsEffect {
   }
 }
 
-class ScrollingDotsPainter extends CustomPainter {
+class _ScrollingDotsPainter extends CustomPainter {
   final int currentPage;
   final int previousePage;
   final int dotRangeIndex;
   final int count;
   final double offset;
-  final ScrollRangeDirection scrollRangeDirection;
-  final ScrollDirection scrollDirection;
+  final _ScrollRangeDirection scrollRangeDirection;
+  final _ScrollDirection scrollDirection;
   final ScrollingDotsEffect effect;
 
-  ScrollingDotsPainter({
+  _ScrollingDotsPainter({
     required this.currentPage,
     required this.previousePage,
     required this.dotRangeIndex,
@@ -301,7 +301,7 @@ class ScrollingDotsPainter extends CustomPainter {
     final reverseDotOffset = (1 - dotOffset) - (1 - dotOffset).floor();
     final dotDistance = effect.distance();
 
-    if (count <= CarouselIndicator.fixedSize) {
+    if (count <= _CarouselIndicator.fixedSize) {
       paintDotsWithinFixedSize(
           canvas, dotPaint, size, dotDistance, dotOffset, reverseDotOffset);
     } else {
@@ -365,22 +365,23 @@ class ScrollingDotsPainter extends CustomPainter {
     double dotOffset,
     double reverseDotOffset,
   ) {
-    bool scrollRangeRight = scrollRangeDirection == ScrollRangeDirection.right;
-    bool scrollRangeLeft = scrollRangeDirection == ScrollRangeDirection.left;
-    bool inPreRange = currentPage < CarouselIndicator.visibleDots;
-    bool inAfterRange = currentPage > count - 1 - CarouselIndicator.visibleDots;
+    bool scrollRangeRight = scrollRangeDirection == _ScrollRangeDirection.right;
+    bool scrollRangeLeft = scrollRangeDirection == _ScrollRangeDirection.left;
+    bool inPreRange = currentPage < _CarouselIndicator.visibleDots;
+    bool inAfterRange =
+        currentPage > count - 1 - _CarouselIndicator.visibleDots;
     bool animateRight = false;
     bool animateLeft = false;
 
     int firstIndex = max(currentPage - dotRangeIndex, 0);
     int lastIndex =
-        firstIndex + (min(count, CarouselIndicator.visibleDots) - 1);
+        firstIndex + (min(count, _CarouselIndicator.visibleDots) - 1);
     int midIndex = ((lastIndex + firstIndex) ~/ 2).toInt();
 
     double firstVisibleDotScale = effect.firstVisibleDotScale;
     double secondVisibleDotScale = effect.secondVisibleDotScale;
     double distanceOffset =
-        (dotDistance * CarouselIndicator.maxVisibleDots - dotDistance) / 2 -
+        (dotDistance * _CarouselIndicator.maxVisibleDots - dotDistance) / 2 -
             midIndex * dotDistance;
     double drawingAnchor = 0;
 
@@ -491,7 +492,7 @@ class ScrollingDotsPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant ScrollingDotsPainter oldDelegate) {
+  bool shouldRepaint(covariant _ScrollingDotsPainter oldDelegate) {
     return offset != oldDelegate.offset;
   }
 }
