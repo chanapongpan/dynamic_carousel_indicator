@@ -1,6 +1,6 @@
 name: dynamic_carousel_indicator
 description: The Dynamic Carousel Indicator provides an interactive indicator for dynamic carousels.
-version: 1.0.3
+version: 1.0.4
 repository: https://github.com/chanapongpan/dynamic_carousel_indicator
 
 environment:

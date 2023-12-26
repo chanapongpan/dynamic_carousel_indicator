@@ -1,3 +1,7 @@
+## 1.0.4
+
+- check dart convention
+
 ## 1.0.3
 
 - fix private types
